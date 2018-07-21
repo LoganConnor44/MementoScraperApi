@@ -1,0 +1,10 @@
+############################
+# Social Media Credentials #
+############################
+TwitterCredentials.cs
+
+###############
+# Directories #
+###############
+bin/
+obj/
