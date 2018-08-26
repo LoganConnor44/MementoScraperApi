@@ -12,9 +12,7 @@ namespace MementoScraperApi.Database
         : base(options) {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasDefaultSchema("MementoScraperDatabase");
 
             modelBuilder.Entity<Memento>()
@@ -73,7 +71,6 @@ namespace MementoScraperApi.Database
                 .HasOne(x => x.Memento)
                 .WithMany(x => x.Memories)
                 .HasForeignKey(x => x.MementoId);
-
         }
     }
 }

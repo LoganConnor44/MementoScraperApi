@@ -4,20 +4,16 @@ using System.Linq;
 using MementoScraperApi.Models;
 using MementoScraperApi.Database;
 
-namespace MementoScraperApi.Controllers
-{
+namespace MementoScraperApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class MementoController : ControllerBase
-    {
+    public class MementoController : ControllerBase {
         private readonly DataContext _context;
 
-        public MementoController(DataContext context)
-        {
+        public MementoController(DataContext context) {
             _context = context;
 
-            if (_context.Mementos.Count() <= 1)
-            {
+            if (_context.Mementos.Count() <= 1) {
                 _context.Mementos
                     .Add(
                         new Memento { 
@@ -30,8 +26,7 @@ namespace MementoScraperApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Memento>> GetAll()
-        {
+        public ActionResult<List<Memento>> GetAll() {
             return _context.Mementos.ToList();
         }
 
@@ -48,11 +43,9 @@ namespace MementoScraperApi.Controllers
         }
 
         [HttpGet("{id}", Name = "Memento")]
-        public ActionResult<Memento> GetById(long id)
-        {
+        public ActionResult<Memento> GetById(long id) {
             var item = _context.Mementos.Find(id);
-            if (item == null)
-            {
+            if (item == null) {
                 return NotFound();
             }
             return item;
