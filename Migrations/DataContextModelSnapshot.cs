@@ -36,6 +36,10 @@ namespace mementoscraperapi.Migrations
                         .IsRequired()
                         .HasColumnName("OWNER");
 
+                    b.Property<string>("Phrase")
+                        .IsRequired()
+                        .HasColumnName("PHRASE");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnName("TYPE");
@@ -48,7 +52,8 @@ namespace mementoscraperapi.Migrations
 
             modelBuilder.Entity("MementoScraperApi.Models.Memory", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Creation")
                         .HasColumnName("CREATION")
@@ -80,6 +85,8 @@ namespace mementoscraperapi.Migrations
                     b.HasKey("Id")
                         .HasName("MEMORY_PK");
 
+                    b.HasIndex("MementoId");
+
                     b.ToTable("Memories");
                 });
 
@@ -87,7 +94,7 @@ namespace mementoscraperapi.Migrations
                 {
                     b.HasOne("MementoScraperApi.Models.Memento", "Memento")
                         .WithMany("Memories")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("MementoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

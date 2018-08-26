@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace mementoscraperapi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class _08262018mysqlmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,6 +22,7 @@ namespace mementoscraperapi.Migrations
                     COMMENT = table.Column<string>(nullable: true),
                     OWNER = table.Column<string>(nullable: false),
                     TYPE = table.Column<string>(nullable: false),
+                    PHRASE = table.Column<string>(nullable: false),
                     CREATION = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
@@ -35,7 +36,8 @@ namespace mementoscraperapi.Migrations
                 columns: table => new
                 {
                     MemoryId = table.Column<long>(nullable: true),
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     MementoId = table.Column<int>(nullable: false),
                     MEDIA_URL = table.Column<string>(nullable: true),
                     MEDIA_URL_HTTPS = table.Column<string>(nullable: true),
@@ -49,13 +51,19 @@ namespace mementoscraperapi.Migrations
                 {
                     table.PrimaryKey("MEMORY_PK", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Memories_Mementos_Id",
-                        column: x => x.Id,
+                        name: "FK_Memories_Mementos_MementoId",
+                        column: x => x.MementoId,
                         principalSchema: "MementoScraperDatabase",
                         principalTable: "Mementos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Memories_MementoId",
+                schema: "MementoScraperDatabase",
+                table: "Memories",
+                column: "MementoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

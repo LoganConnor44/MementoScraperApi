@@ -45,6 +45,7 @@ namespace MementoScraperApi.Models
         /// <returns></returns>
         public IEnumerable<Tweetinvi.Models.ITweet> GetSearchFor(string search)
         {
+            this.Hashtag = search;
             var results = Search.SearchTweets(search);
             return results;
         }
@@ -70,6 +71,7 @@ namespace MementoScraperApi.Models
             foreach (Tweetinvi.Models.ITweet tweet in tweets)
             {
                 var memento = new Memento(tweet);
+                memento.Phrase = this.Hashtag.TrimStart('#');
                 this.Mementos.Add(memento);
             }
         }

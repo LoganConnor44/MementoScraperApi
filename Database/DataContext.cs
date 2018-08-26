@@ -33,6 +33,10 @@ namespace MementoScraperApi.Database
                 .HasColumnName("OWNER")
                 .IsRequired();
             modelBuilder.Entity<Memento>()
+                .Property(x => x.Phrase)
+                .HasColumnName("PHRASE")
+                .IsRequired();
+            modelBuilder.Entity<Memento>()
                 .Property(x => x.Creation)
                 .HasColumnName("CREATION")
                 .IsRequired()
@@ -68,7 +72,7 @@ namespace MementoScraperApi.Database
             modelBuilder.Entity<Memory>()
                 .HasOne(x => x.Memento)
                 .WithMany(x => x.Memories)
-                .HasForeignKey(x => x.Id);
+                .HasForeignKey(x => x.MementoId);
 
         }
     }

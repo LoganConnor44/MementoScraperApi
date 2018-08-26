@@ -16,14 +16,14 @@ namespace MementoScraperApi.Controllers
         {
             _context = context;
 
-            if (_context.Mementos.Count() == 0)
+            if (_context.Mementos.Count() <= 1)
             {
                 _context.Mementos
                     .Add(
                         new Memento { 
-                            Owner = "Item1",
+                            Owner = "Item2",
                             Type = "asd",
-                            Creation = System.DateTime.Now
+                            Phrase = "goingsparrow"
                 });
                 _context.SaveChanges();
             }
@@ -35,6 +35,18 @@ namespace MementoScraperApi.Controllers
             return _context.Mementos.ToList();
         }
 
+        [Route("GetByHashtag/{hashtag}")]
+        [HttpGet("{hashtag}", Name = "GetByHashtag")]
+        public ActionResult<List<Memento>> GetByHashtag(string hashtag) {
+            var items = _context.Mementos
+                .Where(x => x.Phrase.ToUpper() == hashtag.ToUpper())
+                .ToList();
+            if (items == null) {
+                return NotFound();
+            }
+            return items;
+        }
+
         [HttpGet("{id}", Name = "Memento")]
         public ActionResult<Memento> GetById(long id)
         {
@@ -44,6 +56,18 @@ namespace MementoScraperApi.Controllers
                 return NotFound();
             }
             return item;
+        }
+
+        [Route("CreateMementos/{Hashtag}")]
+        [HttpPost("{hashtag}", Name = "CreateMementosForHashtag")]
+        public IActionResult CreateMementosForHashtag(string hashtag) {
+            var twitter = new Twitter();
+            var results = twitter.GetSearchFor("#" + hashtag);
+            var mediaOnly = twitter.GetTweetsWithMedia(results);
+            twitter.CreateMementos(mediaOnly);
+            _context.Mementos.AddRange(twitter.Mementos);
+            _context.SaveChanges();
+            return CreatedAtRoute("GetByHashtag", hashtag);
         }
     }
 }

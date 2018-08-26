@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace mementoscraperapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180715152811_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180826160733_08262018-mysql-migration")]
+    partial class _08262018mysqlmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,10 @@ namespace mementoscraperapi.Migrations
                         .IsRequired()
                         .HasColumnName("OWNER");
 
+                    b.Property<string>("Phrase")
+                        .IsRequired()
+                        .HasColumnName("PHRASE");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnName("TYPE");
@@ -50,7 +54,8 @@ namespace mementoscraperapi.Migrations
 
             modelBuilder.Entity("MementoScraperApi.Models.Memory", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Creation")
                         .HasColumnName("CREATION")
@@ -82,6 +87,8 @@ namespace mementoscraperapi.Migrations
                     b.HasKey("Id")
                         .HasName("MEMORY_PK");
 
+                    b.HasIndex("MementoId");
+
                     b.ToTable("Memories");
                 });
 
@@ -89,7 +96,7 @@ namespace mementoscraperapi.Migrations
                 {
                     b.HasOne("MementoScraperApi.Models.Memento", "Memento")
                         .WithMany("Memories")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("MementoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

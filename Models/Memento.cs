@@ -35,10 +35,20 @@ namespace MementoScraperApi.Models {
         /// </summary>
         public string Type { get; set; }
 
+        public string Phrase { get; set; }
+
         /// <summary>
         /// The date of the Memento.
         /// </summary>
-        public DateTime Creation { get; set; }
+        private DateTime _creation;
+        public DateTime Creation {
+            get {
+                return _creation;
+            }
+            set {
+                _creation = value;
+            }
+        }
 
         public Memento() {
             
@@ -60,6 +70,7 @@ namespace MementoScraperApi.Models {
             this.Comment = tweet.FullText;
             this.Type = "twitter";
             this.Memories = new List<Memory>();
+            this.Creation = DateTime.Now;
 
             foreach (MediaEntity media in tweet.Media)
             {

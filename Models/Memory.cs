@@ -57,6 +57,18 @@ namespace MementoScraperApi.Models {
         /// Date of found Memory.
         /// </summary>
         /// <value></value>
-        public DateTime Creation { get; set; }
+        private DateTime _creation;
+        public DateTime Creation {
+            get {
+                return _creation;
+            }
+            set {
+                _creation = value;
+            }
+        }
+
+        public Memory() {
+            this.Creation = DateTime.Now;
+        }
     }
 }

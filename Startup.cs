@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using MementoScraperApi.Database;
-using Pomelo.EntityFrameworkCore.MySql;
 using MementoScraperApi.Credentials;
 
 namespace memento_scraper_api
