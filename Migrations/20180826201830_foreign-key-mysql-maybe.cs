@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace mementoscraperapi.Migrations
 {
-    public partial class _08262018mysqlmigration : Migration
+    public partial class foreignkeymysqlmaybe : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,7 @@ namespace mementoscraperapi.Migrations
                     MemoryId = table.Column<long>(nullable: true),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    MementoId = table.Column<int>(nullable: false),
+                    MementoForeignKey = table.Column<int>(nullable: false),
                     MEDIA_URL = table.Column<string>(nullable: true),
                     MEDIA_URL_HTTPS = table.Column<string>(nullable: true),
                     URL = table.Column<string>(nullable: true),
@@ -51,8 +51,8 @@ namespace mementoscraperapi.Migrations
                 {
                     table.PrimaryKey("MEMORY_PK", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Memories_Mementos_MementoId",
-                        column: x => x.MementoId,
+                        name: "FK_Memories_Mementos_MementoForeignKey",
+                        column: x => x.MementoForeignKey,
                         principalSchema: "MementoScraperDatabase",
                         principalTable: "Mementos",
                         principalColumn: "Id",
@@ -60,10 +60,14 @@ namespace mementoscraperapi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Memories_MementoId",
+                name: "IX_Memories_MementoForeignKey",
                 schema: "MementoScraperDatabase",
                 table: "Memories",
-                column: "MementoId");
+                column: "MementoForeignKey");
+
+            migrationBuilder.Sql(
+                "CREATE VIEW MEMENTOSCRAPERDATABASE.MEMENTOS_VW AS SELECT MENTO.COMMENT AS COMMENT, MENTO.OWNER AS OWNER, (SELECT COUNT(*) FROM MEMENTOSCRAPERDATABASE.MEMORIES MEM WHERE MEM.MEMENTOFOREIGNKEY = MENTO.ID) AS NUMBER_OF_MEMORIES FROM MEMENTOSCRAPERDATABASE.MEMENTOS MENTO"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

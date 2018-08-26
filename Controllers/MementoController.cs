@@ -32,8 +32,8 @@ namespace MementoScraperApi.Controllers {
 
         [Route("GetByHashtag/{hashtag}")]
         [HttpGet("{hashtag}", Name = "GetByHashtag")]
-        public ActionResult<List<Memento>> GetByHashtag(string hashtag) {
-            var items = _context.Mementos
+        public ActionResult<List<MementosView>> GetByHashtag(string hashtag) {
+            var items = _context.MementosView
                 .Where(x => x.Phrase.ToUpper() == hashtag.ToUpper())
                 .ToList();
             if (items == null) {

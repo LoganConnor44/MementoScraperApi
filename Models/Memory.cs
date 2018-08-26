@@ -12,8 +12,9 @@ namespace MementoScraperApi.Models {
 
         public int Id { get; set; }
 
-        public int MementoId { get; set; }
         public Memento Memento { get; set; }
+
+        public int MementoForeignKey { get; set; }
 
         /// <summary>
         /// The direct url for a media entity.

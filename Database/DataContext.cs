@@ -7,6 +7,7 @@ namespace MementoScraperApi.Database
     {
         public DbSet<Memento> Mementos { get; set; }
         public DbSet<Memory> Memories { get; set; }
+        public DbQuery<MementosView> MementosView { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
         : base(options) {
@@ -68,9 +69,34 @@ namespace MementoScraperApi.Database
                 .IsRequired()
                 .HasColumnType("datetime");
             modelBuilder.Entity<Memory>()
-                .HasOne(x => x.Memento)
-                .WithMany(x => x.Memories)
-                .HasForeignKey(x => x.MementoId);
+                .HasOne(mem => mem.Memento)
+                .WithMany(mento => mento.Memories)
+                .HasForeignKey(mem => mem.MementoForeignKey);
+
+            modelBuilder.Query<MementosView>()
+                .ToView("MEMENTOS_VW")
+                .Property(v => v.Phrase)
+                .HasColumnName("PHRASE");
+            modelBuilder.Query<MementosView>()
+                .ToView("MEMENTOS_VW")
+                .Property(v => v.Comment)
+                .HasColumnName("COMMENT");
+            modelBuilder.Query<MementosView>()
+                .ToView("MEMENTOS_VW")
+                .Property(v => v.Owner)
+                .HasColumnName("OWNER");
+            modelBuilder.Query<MementosView>()
+                .ToView("MEMENTOS_VW")
+                .Property(v => v.SocialType)
+                .HasColumnName("SOCIAL_TYPE");
+            modelBuilder.Query<MementosView>()
+                .ToView("MEMENTOS_VW")
+                .Property(v => v.Url)
+                .HasColumnName("URL");
+            modelBuilder.Query<MementosView>()
+                .ToView("MEMENTOS_VW")
+                .Property(v => v.MediaType)
+                .HasColumnName("MEDIA_TYPE");
         }
     }
 }

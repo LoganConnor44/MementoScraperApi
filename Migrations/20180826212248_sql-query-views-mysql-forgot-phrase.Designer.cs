@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace mementoscraperapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180826160733_08262018-mysql-migration")]
-    partial class _08262018mysqlmigration
+    [Migration("20180826212248_sql-query-views-mysql-forgot-phrase")]
+    partial class sqlqueryviewsmysqlforgotphrase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,7 +77,7 @@ namespace mementoscraperapi.Migrations
                     b.Property<string>("MediaURLHttps")
                         .HasColumnName("MEDIA_URL_HTTPS");
 
-                    b.Property<int>("MementoId");
+                    b.Property<int>("MementoForeignKey");
 
                     b.Property<long?>("MemoryId");
 
@@ -87,7 +87,7 @@ namespace mementoscraperapi.Migrations
                     b.HasKey("Id")
                         .HasName("MEMORY_PK");
 
-                    b.HasIndex("MementoId");
+                    b.HasIndex("MementoForeignKey");
 
                     b.ToTable("Memories");
                 });
@@ -96,7 +96,7 @@ namespace mementoscraperapi.Migrations
                 {
                     b.HasOne("MementoScraperApi.Models.Memento", "Memento")
                         .WithMany("Memories")
-                        .HasForeignKey("MementoId")
+                        .HasForeignKey("MementoForeignKey")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
