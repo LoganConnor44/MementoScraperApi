@@ -11,29 +11,29 @@ namespace MementoScraperApi.Controllers {
         private readonly DataContext _context;
 
         public MementoController(DataContext context) {
-            _context = context;
+            this._context = context;
 
-            if (_context.Mementos.Count() <= 1) {
-                _context.Mementos
+            if (this._context.Mementos.Count() <= 1) {
+                this._context.Mementos
                     .Add(
                         new Memento { 
                             Owner = "Item2",
                             Type = "asd",
                             Phrase = "goingsparrow"
                 });
-                _context.SaveChanges();
+                this._context.SaveChanges();
             }
         }
 
         [HttpGet]
         public ActionResult<List<Memento>> GetAll() {
-            return _context.Mementos.ToList();
+            return this._context.Mementos.ToList();
         }
 
         [Route("GetByHashtag/{hashtag}")]
         [HttpGet("{hashtag}", Name = "GetByHashtag")]
         public ActionResult<List<MementosView>> GetByHashtag(string hashtag) {
-            var items = _context.MementosView
+            var items = this._context.MementosView
                 .Where(x => x.Phrase.ToUpper() == hashtag.ToUpper())
                 .ToList();
             if (items == null) {
@@ -44,7 +44,7 @@ namespace MementoScraperApi.Controllers {
 
         [HttpGet("{id}", Name = "Memento")]
         public ActionResult<Memento> GetById(long id) {
-            var item = _context.Mementos.Find(id);
+            var item = this._context.Mementos.Find(id);
             if (item == null) {
                 return NotFound();
             }
@@ -58,8 +58,8 @@ namespace MementoScraperApi.Controllers {
             var results = twitter.GetSearchFor("#" + hashtag);
             var mediaOnly = twitter.GetTweetsWithMedia(results);
             twitter.CreateMementos(mediaOnly);
-            _context.Mementos.AddRange(twitter.Mementos);
-            _context.SaveChanges();
+            this._context.Mementos.AddRange(twitter.Mementos);
+            this._context.SaveChanges();
             return CreatedAtRoute("GetByHashtag", hashtag);
         }
     }

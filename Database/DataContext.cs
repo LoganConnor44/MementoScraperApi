@@ -8,6 +8,7 @@ namespace MementoScraperApi.Database
         public DbSet<Memento> Mementos { get; set; }
         public DbSet<Memory> Memories { get; set; }
         public DbQuery<MementosView> MementosView { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
         : base(options) {
