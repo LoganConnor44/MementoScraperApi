@@ -6,6 +6,7 @@ namespace MementoScraperApi.Helpers {
         public AutoMapperProfile() {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<CronDetailDto, CronDetail>();
         }
     }
 }

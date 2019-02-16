@@ -18,6 +18,34 @@ namespace mementoscraperapi.Migrations
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("MementoScraperApi.Models.CronDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Creation");
+
+                    b.Property<bool>("Facebook");
+
+                    b.Property<string>("Frequency");
+
+                    b.Property<string>("Hashtag");
+
+                    b.Property<bool>("Instagram");
+
+                    b.Property<DateTime>("Modification");
+
+                    b.Property<bool>("Twitter");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CronDetails");
+                });
+
             modelBuilder.Entity("MementoScraperApi.Models.Memento", b =>
                 {
                     b.Property<int>("Id")
@@ -108,6 +136,14 @@ namespace mementoscraperapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MementoScraperApi.Models.CronDetail", b =>
+                {
+                    b.HasOne("MementoScraperApi.Models.User", "User")
+                        .WithMany("CronDetails")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MementoScraperApi.Models.Memory", b =>

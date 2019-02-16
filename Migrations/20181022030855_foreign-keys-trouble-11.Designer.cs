@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace mementoscraperapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180923172229_attempt-to-fix-db-after-users-issue")]
-    partial class attempttofixdbafterusersissue
+    [Migration("20181022030855_foreign-keys-trouble-11")]
+    partial class foreignkeystrouble11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,34 @@ namespace mementoscraperapi.Migrations
                 .HasDefaultSchema("MementoScraperDatabase")
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("MementoScraperApi.Models.CronDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Creation");
+
+                    b.Property<bool>("Facebook");
+
+                    b.Property<string>("Frequency");
+
+                    b.Property<string>("Hashtag");
+
+                    b.Property<bool>("Instagram");
+
+                    b.Property<DateTime>("Modification");
+
+                    b.Property<bool>("Twitter");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CronDetails");
+                });
 
             modelBuilder.Entity("MementoScraperApi.Models.Memento", b =>
                 {
@@ -110,6 +138,14 @@ namespace mementoscraperapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MementoScraperApi.Models.CronDetail", b =>
+                {
+                    b.HasOne("MementoScraperApi.Models.User", "User")
+                        .WithMany("CronDetails")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MementoScraperApi.Models.Memory", b =>

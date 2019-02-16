@@ -2,7 +2,7 @@
 
 namespace mementoscraperapi.Migrations
 {
-    public partial class attempttofixdbafterusersissue : Migration
+    public partial class foreignkeyscheckingformagic : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

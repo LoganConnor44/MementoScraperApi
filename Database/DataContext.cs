@@ -9,6 +9,7 @@ namespace MementoScraperApi.Database
         public DbSet<Memory> Memories { get; set; }
         public DbQuery<MementosView> MementosView { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<CronDetail> CronDetails { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
         : base(options) {
@@ -98,6 +99,11 @@ namespace MementoScraperApi.Database
                 .ToView("MEMENTOS_VW")
                 .Property(v => v.MediaType)
                 .HasColumnName("MEDIA_TYPE");
+
+            // modelBuilder.Entity<CronDetail>()
+            //     .HasOne(cron => cron.User)
+            //     .WithMany(user => user.CronDetails)
+            //     .HasForeignKey(cron => cron.UserForeignKey);
         }
     }
 }

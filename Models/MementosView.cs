@@ -1,5 +1,6 @@
 namespace MementoScraperApi.Models {
     public class MementosView {
+        public int Id { get; set; }
         public string Phrase { get; set; }
         public string Comment { get; set; }
         public string Owner { get; set; }

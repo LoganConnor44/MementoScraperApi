@@ -72,6 +72,7 @@ namespace memento_scraper_api
  
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICronDetailService, CronDetailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
