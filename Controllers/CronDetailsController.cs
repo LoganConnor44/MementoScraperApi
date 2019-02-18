@@ -56,5 +56,18 @@ namespace MementoScraperApi.Controllers {
             }
             return items;
         }
+
+        [Route("DeleteCronDetailById/{cronDetailId}")]
+        [HttpDelete("{cronDetailId}", Name = "DeleteCronDetailById")]
+        public IActionResult DeleteCronDetailById([FromBody] int cronDetailId) {
+            try {
+                // save 
+                this._cronDetailService.Delete(cronDetailId);
+                return Ok();
+            } catch(AppException ex) {
+                // return error message if there was an exception
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
