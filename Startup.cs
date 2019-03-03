@@ -35,7 +35,7 @@ namespace memento_scraper_api
         public void ConfigureServices(IServiceCollection services) {
             services.AddCors(options => {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:3000")
+                    builder => builder.WithOrigins("http://memento-scraper-client:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                 );
@@ -46,10 +46,10 @@ namespace memento_scraper_api
             services.AddDbContextPool<DataContext>(
                 options => options.UseMySql(Configuration.GetConnectionString("MementoScraperDatabase"),
                     mysqlOptions => {
-                        mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql);
+                            // Be sure to verify with docker-compose.yml
+                            mysqlOptions.ServerVersion(new Version(8, 0, 12), ServerType.MySql);      
                     }
             ));
-            // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSecret>(appSettingsSection);
             // configure jwt authentication

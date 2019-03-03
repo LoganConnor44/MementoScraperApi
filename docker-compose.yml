@@ -1,0 +1,52 @@
+version: '3.0'
+ 
+services:
+
+  # Name of front-end application
+  memento-scraper-client:
+    container_name: memento-scraper-client
+    image: loganconnor44/memento-scraper-client:v0.0.2
+    ports:
+      - "3000:3000"
+    networks:
+      - memento-scraper-network-bridge
+ 
+  # Name of back-end application
+  memento-scraper-api:
+    container_name: memento_scraper-api
+    image: loganconnor44/memento-scraper-api:v0.0.2
+    build:
+      context: .
+    ports:
+      - 5000:80
+      - 5001:443
+    networks:
+      - memento-scraper-network-bridge
+
+  # Name of application database
+  memento-scraper-db:
+    container_name: memento-scraper-db
+    # Be sure to verify with Startup.cs
+    image: mysql:8.0.12
+    # Environment for mysql that will be created
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: MementoScraperDatabase
+      MYSQL_USER: MementoScraperUser
+      MYSQL_PASSWORD: 8675309
+    # Allows persistant data - this will be mounted to the host machine
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - memento-scraper-network-bridge
+
+
+
+volumes:
+  mysql-data:
+
+# This allows the containers to talk to one another
+networks:
+  memento-scraper-network-bridge:
