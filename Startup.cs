@@ -35,7 +35,7 @@ namespace memento_scraper_api
         public void ConfigureServices(IServiceCollection services) {
             services.AddCors(options => {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://memento-scraper-client:3000")
+                    builder => builder.WithOrigins("http://localhost:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                 );
